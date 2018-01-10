@@ -188,7 +188,8 @@ unsafe fn build_window<S: Clone+Into<String>>(t: &WindowT<S>) -> Result<HWND, Er
     use winapi::{DWORD, WS_VISIBLE, WS_DISABLED, WS_OVERLAPPEDWINDOW, WS_CAPTION, WS_OVERLAPPED, WS_MINIMIZEBOX,
       WS_MAXIMIZEBOX, WS_SYSMENU, GWL_USERDATA, WS_CLIPCHILDREN};
 
-    let fixed_window: DWORD = WS_CLIPCHILDREN| WS_SYSMENU | WS_CAPTION | WS_OVERLAPPED | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
+    // let fixed_window: DWORD = WS_CLIPCHILDREN| WS_SYSMENU | WS_CAPTION | WS_OVERLAPPED | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
+    let fixed_window: DWORD = WS_CLIPCHILDREN| WS_SYSMENU | WS_CAPTION | WS_OVERLAPPED | WS_MINIMIZEBOX;
     let flags: DWORD = 
     if t.visible    { WS_VISIBLE }   else { 0 } |
     if t.disabled   { WS_DISABLED }  else { 0 } |

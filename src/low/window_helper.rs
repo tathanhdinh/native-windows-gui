@@ -76,8 +76,8 @@ pub struct WindowParams<S1: Into<String>, S2: Into<String>> {
 */
 pub unsafe fn build_sysclass<S: Into<String>>(p: SysclassParams<S>) -> Result<(), SystemError> {
     use kernel32::{GetModuleHandleW, GetLastError};
-    use user32::{LoadCursorW, RegisterClassExW};
-    use winapi::{WNDCLASSEXW, CS_HREDRAW, CS_VREDRAW, IDC_ARROW, COLOR_WINDOW, UINT, ERROR_CLASS_ALREADY_EXISTS};
+    use user32::{LoadCursorW, RegisterClassExW, LoadIconW};
+    use winapi::{WNDCLASSEXW, CS_HREDRAW, CS_VREDRAW, IDC_ARROW, COLOR_WINDOW, UINT, ERROR_CLASS_ALREADY_EXISTS, IDI_APPLICATION};
 
     let hmod = GetModuleHandleW(ptr::null_mut());
     if hmod.is_null() { return Err(SystemError::SystemClassCreation); }
@@ -102,12 +102,14 @@ pub unsafe fn build_sysclass<S: Into<String>>(p: SysclassParams<S>) -> Result<()
         cbClsExtra: 0,
         cbWndExtra: 0,
         hInstance: hmod,
-        hIcon: ptr::null_mut(),
+        // hIcon: ptr::null_mut(),
+        hIcon: LoadIconW(ptr::null_mut(), IDI_APPLICATION),
         hCursor: LoadCursorW(ptr::null_mut(), IDC_ARROW),
         hbrBackground: background,
         lpszMenuName: ptr::null(),
         lpszClassName: class_name.as_ptr(),
-        hIconSm: ptr::null_mut()
+        // hIconSm: ptr::null_mut()
+        hIconSm: LoadIconW(ptr::null_mut(), IDI_APPLICATION)
     };
 
     let class_token = RegisterClassExW(&class);
